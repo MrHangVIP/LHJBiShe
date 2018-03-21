@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+
+	<listener>
+		<listener-class>com.lhj.utils.ListenerLoadConfig</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>RegistUser</servlet-name>
+		<servlet-class>com.lhj.servlets.RegistUser</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>RegistUser</servlet-name>
+		<url-pattern>/RegistUser</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginUser</servlet-name>
+		<servlet-class>com.lhj.servlets.LoginUser</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>LoginUser</servlet-name>
+		<url-pattern>/LoginUser</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GetUserInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.GetUserInfo</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>GetUserInfo</servlet-name>
+		<url-pattern>/GetUserInfo</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UpdateUserInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdateUserInfo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdateUserInfo</servlet-name>
+		<url-pattern>/UpdateUserInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ImageUpload</servlet-name>
+		<servlet-class>com.lhj.servlets.ImageUpload</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ImageUpload</servlet-name>
+		<url-pattern>/ImageUpload</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateHeadUrl</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdateHeadUrl</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdateHeadUrl</servlet-name>
+		<url-pattern>/UpdateHeadUrl</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdatePassWord</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdatePassWord</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdatePassWord</servlet-name>
+		<url-pattern>/UpdatePassWord</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetBusinessInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.GetBusinessInfo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GetBusinessInfo</servlet-name>
+		<url-pattern>/GetBusinessInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddBusiness</servlet-name>
+		<servlet-class>com.lhj.servlets.AddBusiness</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AddBusiness</servlet-name>
+		<url-pattern>/AddBusiness</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateVehicleStatus</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdateVehicleStatus</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdateVehicleStatus</servlet-name>
+		<url-pattern>/UpdateVehicleStatus</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetVehicleData</servlet-name>
+		<servlet-class>com.lhj.servlets.GetVehicleData</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GetVehicleData</servlet-name>
+		<url-pattern>/GetVehicleData</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddVehicleInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.AddVehicleInfo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AddVehicleInfo</servlet-name>
+		<url-pattern>/AddVehicleInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetTags</servlet-name>
+		<servlet-class>com.lhj.servlets.GetTags</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GetTags</servlet-name>
+		<url-pattern>/GetTags</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateVehicleRecordState</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdateVehicleRecordState</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdateVehicleRecordState</servlet-name>
+		<url-pattern>/UpdateVehicleRecordState</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddRecordInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.AddRecordInfo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AddRecordInfo</servlet-name>
+		<url-pattern>/AddRecordInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetVehicleRecordDatas</servlet-name>
+		<servlet-class>com.lhj.servlets.GetVehicleRecordDatas</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GetVehicleRecordDatas</servlet-name>
+		<url-pattern>/GetVehicleRecordDatas</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
+
+
+	
