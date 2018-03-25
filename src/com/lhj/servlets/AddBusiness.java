@@ -40,25 +40,29 @@ public class AddBusiness extends BaseServletFactory {
 		businessBean.setUserPass(userPass);
 		businessBean.setAddress(address);
 		businessBean.setCompanyname(companyname);
-		BusinessDaoImp businessDaoImp = new BusinessDaoImp();
-		boolean isExist = businessDaoImp.emailCheck(email);
 		String respose="";
-		if (isExist) {
-			respose="���˺���ע�ᣡ";
-		} else {
-			String businessId=Constant.getRandomCharAndNumr(11);
-			businessBean.setBusinessId(businessId);
-			boolean result = businessDaoImp.insertData(businessBean);
-			if (result) {
-				respose="ע��ɹ���";
+		if(!Constant.isEmail(email)){
+			respose="注册失败！邮箱地址不合法！";
+		}else{
+			BusinessDaoImp businessDaoImp = new BusinessDaoImp();
+			boolean isExist = businessDaoImp.emailCheck(email);
+			if (isExist) {
+				respose="注册失败！邮箱已存在！";
 			} else {
-				respose="ע��ʧ�ܣ�";
+				String businessId=Constant.getRandomCharAndNumr(11);
+				businessBean.setBusinessId(businessId);
+				boolean result = businessDaoImp.insertData(businessBean);
+				if (result) {
+					respose="注册成功！您的企业号ID是："+businessId+" 。请记住！";
+				} else {
+					respose="注册失败！";
+				}
 			}
 		}
 		PrintWriter out = response.getWriter();
 		out.println("<html>");  
 	    out.println("<head>");  
-	    out.println("<title>"+"�Y��"+"</title>"); 
+	    out.println("<title>"+"注册"+"</title>"); 
 	    out.print("<meta http-equiv=content-type content=text/html; charset=UTF-8>");
 	    out.println("</head>");  
 	    out.println("<body>");  

@@ -157,13 +157,13 @@ public class VehicleRecordDaoImp extends BaseDBFactor<VehicleRecordBean> {
 					+ "as b on a.vehicleid = b.vehicleid  inner join t_borrow_record as c on a.vehicleid = c.vehicleid group by createtimestmp desc";
 			StringBuilder sb=new StringBuilder(sql);
 			sb.append(" where businessid = " + businessId);
-			if(!"".equals(state)){
+			if(!"".equals(userId) && userId !=null){
 				sb.append(" , userId = " + userId);
 			}
-			if(!"".equals(state)){
+			if(!"".equals(state) && state!=null){
 				sb.append(" , state = " + state);
 			}
-			if(!"".equals(state)){
+			if(!"".equals(vehicleId) && vehicleId!=null){
 				sb.append(" , vehicleId = " + vehicleId);
 			}
 			sb.append(" , vehicleId = " + vehicleId);

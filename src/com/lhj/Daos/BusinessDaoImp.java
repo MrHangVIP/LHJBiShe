@@ -28,9 +28,9 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 			stat.setString(2, t.getEmail());
 			stat.setString(3, t.getUserPass());
 			stat.setString(4, t.getCompanyname());
-			stat.setString(3, DateUtil.getCurrentDate());
-			stat.setString(5,  DateUtil.getCurrentDate());
-			stat.setString(6, t.getAddress());
+			stat.setString(5, DateUtil.getCurrentDate());
+			stat.setString(6,  DateUtil.getCurrentDate());
+			stat.setString(7, t.getAddress());
 			// 鎵ц
 			rowCount = stat.executeUpdate();
 		} catch (Exception e) {
@@ -125,7 +125,7 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select * form t_business where email = ? and password = ?";
+			String sql = "select * from t_business where email = ? and password = ?";
 			businessBean = (BusinessBean) qr.query(conn, sql, new BeanHandler<BusinessBean>(BusinessBean.class), userPhone, userPass);
 		} catch (Exception e) {
 			e.printStackTrace();

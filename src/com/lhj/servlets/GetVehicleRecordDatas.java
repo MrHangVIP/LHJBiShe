@@ -24,7 +24,7 @@ public class GetVehicleRecordDatas extends BaseServletFactory {
 		String vehicleId=request.getParameter("vehicleId");
 		Map<String, String> map = new HashMap<String, String>();
 		VehicleRecordDaoImp vehicleRecordDaoImp = new VehicleRecordDaoImp();
-		List<VehicleRecordBean> vehicleRecordBeans = vehicleRecordDaoImp.getDataList(businessId,userId,state,vehicleId);
+		List<VehicleRecordBean> vehicleRecordBeans = vehicleRecordDaoImp.getDatasWithState(businessId,userId,state,vehicleId);
 		JSONObject itemJson = JSONObject.fromObject(vehicleRecordBeans);
 		map.put("result", "success");
 		map.put("data", itemJson.toString());
