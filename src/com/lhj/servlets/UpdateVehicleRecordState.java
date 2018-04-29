@@ -22,9 +22,9 @@ public class UpdateVehicleRecordState extends BaseServletFactory {
 	protected Map<String, String> dataModel(HttpServletRequest request, HttpServletResponse response) {
 		String state=request.getParameter("state");
 		String id=request.getParameter("id");
-		String vehicleId=request.getParameter("vehicleId");
+		int vehicleId=Integer.parseInt(request.getParameter("vehicleId"));
 		VehicleRecordDaoImp vehicleRecordDaoImp = new VehicleRecordDaoImp();
-		Boolean result = vehicleRecordDaoImp.updateData(id,state,vehicleId);
+		Boolean result = vehicleRecordDaoImp.updateData(Integer.parseInt(id),state,vehicleId);
 		Map<String, String> map = new HashMap<String, String>();
 		if (result) {
 			map.put("result", "success");

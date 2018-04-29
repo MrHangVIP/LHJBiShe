@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.lhj.Daos.base.BaseDBFactor;
 import com.lhj.beans.BusinessBean;
@@ -84,7 +85,7 @@ public class VehicleDaoImp extends BaseDBFactor<VehicleBean> {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select * from t_vehicle";
-			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanHandler(VehicleBean.class));
+			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanListHandler<VehicleBean>(VehicleBean.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -96,15 +97,55 @@ public class VehicleDaoImp extends BaseDBFactor<VehicleBean> {
 	/**
 	 * 根据类型获取
 	 */
-	public List<VehicleBean> getDataList(int typeId, String businessId ) {
+	public List<VehicleBean> getDataLists(int typeId, String businessId) {
 		Connection conn = null;
 		List<VehicleBean> ticketBeans = null;
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select a.*,b.statusid,b.statustype from t_vehicle as a " + "inner join t_status "
-					+ "as b where a.vehicleid = b.vehicleid, typeid= ? and businessId = ? group by vehicleid desc";
-			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanHandler(VehicleBean.class), typeId, businessId);
+					+ "as b on a.vehicleid = b.vehicleid where a.typeid= ? and a.businessId = ? group by vehicleid desc";
+			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanListHandler<VehicleBean>(VehicleBean.class), typeId, businessId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConn(null, conn);
+		}
+		return ticketBeans;
+	}
+	
+	/**
+	 * 根据类型获取
+	 */
+	public List<VehicleBean> getDataLists(int typeId, String businessId,int vehicleId) {
+		Connection conn = null;
+		List<VehicleBean> ticketBeans = null;
+		try {
+			conn = getConn();
+			QueryRunner qr = new QueryRunner();
+			String sql = "select a.*,b.statusid,b.statustype from t_vehicle as a " + "inner join t_status "
+					+ "as b on a.vehicleid = b.vehicleid where a.typeid= ? and a.businessId = ? and a.vehicleId != ? group by vehicleid desc";
+			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanListHandler<VehicleBean>(VehicleBean.class), typeId, businessId,vehicleId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConn(null, conn);
+		}
+		return ticketBeans;
+	}
+	
+	/**
+	 * 根据类型获取
+	 */
+	public List<VehicleBean> getDataLists(String businessId) {
+		Connection conn = null;
+		List<VehicleBean> ticketBeans = null;
+		try {
+			conn = getConn();
+			QueryRunner qr = new QueryRunner();
+			String sql = "select a.*,b.statusid,b.statustype from t_vehicle as a " + "inner join t_status "
+					+ "as b on a.vehicleid = b.vehicleid where a.businessId = ? group by vehicleid desc";
+			ticketBeans = (List<VehicleBean>) qr.query(conn, sql, new BeanListHandler<VehicleBean>(VehicleBean.class), businessId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -190,7 +231,7 @@ public class VehicleDaoImp extends BaseDBFactor<VehicleBean> {
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select * form t_vehicle where vehicleId= ?";
+			String sql = "select * from t_vehicle where vehicleId= ?";
 			TicketBean = (VehicleBean) qr.query(conn, sql, new BeanHandler<VehicleBean>(VehicleBean.class), vehicleId);
 		} catch (Exception e) {
 			e.printStackTrace();

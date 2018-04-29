@@ -7,7 +7,7 @@ public class BusinessBean implements Serializable{
 	
 	private String businessId;
 	
-	private String userPass;
+	private String passWord;
 	
 	private String companyname;
 	
@@ -37,12 +37,12 @@ public class BusinessBean implements Serializable{
 		this.businessId = businessId;
 	}
 
-	public String getUserPass() {
-		return userPass;
+	public String getPassWord() {
+		return passWord;
 	}
 
-	public void setUserPass(String userPass) {
-		this.userPass = userPass;
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
 	}
 
 	public String getCompanyname() {

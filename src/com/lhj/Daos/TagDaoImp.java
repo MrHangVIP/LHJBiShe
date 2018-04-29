@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.lhj.Daos.base.BaseDBFactor;
 import com.lhj.beans.TagBean;
+import com.lhj.beans.UserBean;
 
 public class TagDaoImp extends BaseDBFactor<TagBean> {
 
@@ -19,14 +21,13 @@ public class TagDaoImp extends BaseDBFactor<TagBean> {
 
 	@Override
 	public List<TagBean> getDataList(Object... obj) {
-		int userid = Integer.parseInt(obj[0].toString());
 		Connection conn = null;
 		List<TagBean> tagBeans = null;
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select * from t_type ";
-			tagBeans = (List<TagBean>) qr.query(conn, sql, new BeanHandler(TagBean.class), userid);
+			tagBeans = (List<TagBean>) qr.query(conn, sql, new  BeanListHandler(TagBean.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

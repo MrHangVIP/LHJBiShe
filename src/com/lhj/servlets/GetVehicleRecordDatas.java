@@ -11,6 +11,7 @@ import com.lhj.Daos.VehicleRecordDaoImp;
 import com.lhj.beans.VehicleRecordBean;
 import com.lhj.servlets.base.BaseServletFactory;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class GetVehicleRecordDatas extends BaseServletFactory {
@@ -19,15 +20,27 @@ public class GetVehicleRecordDatas extends BaseServletFactory {
 	@Override
 	protected Map<String, String> dataModel(HttpServletRequest request, HttpServletResponse response) {
 		String businessId=request.getParameter("businessId");
-		String userId=request.getParameter("userId");
+		String userid=request.getParameter("userId");
 		String state=request.getParameter("state");
 		String vehicleId=request.getParameter("vehicleId");
 		Map<String, String> map = new HashMap<String, String>();
 		VehicleRecordDaoImp vehicleRecordDaoImp = new VehicleRecordDaoImp();
-		List<VehicleRecordBean> vehicleRecordBeans = vehicleRecordDaoImp.getDatasWithState(businessId,userId,state,vehicleId);
-		JSONObject itemJson = JSONObject.fromObject(vehicleRecordBeans);
+		int id=-1;
+		try{
+			id=Integer.parseInt(userid);
+		}catch(Exception e){
+			id=-1;
+		}
+		List<VehicleRecordBean> vehicleRecordBeans = vehicleRecordDaoImp.getDatasWithState(businessId,id,state,vehicleId);
+		JSONArray itemJson = JSONArray.fromObject(vehicleRecordBeans);
 		map.put("result", "success");
 		map.put("data", itemJson.toString());
 		return map;
+	}
+	
+	@Override
+	protected boolean tokenChecked(String userPhone, String token) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

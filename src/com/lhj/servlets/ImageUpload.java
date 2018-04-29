@@ -41,7 +41,7 @@ public class ImageUpload extends BaseServletFactory {
 		List<String> images = new ArrayList<String>();
 		List<String> imageNameList = new ArrayList<String>();
 		Map<String, String[]> params = request.getParameterMap();
-		for (int i = 1; i <= params.keySet().size() - 2; i++) {
+		for (int i = 1; i <= params.keySet().size(); i++) {
 			for (String key : params.keySet()) {
 				if (key.equals("image" + i)) {
 					images.add(request.getParameter(key));
@@ -88,6 +88,12 @@ public class ImageUpload extends BaseServletFactory {
 		map.put("result", "success");
 		map.put("data", jsonArray.toString());
 		return map;
+	}
+	
+	@Override
+	protected boolean tokenChecked(String userPhone, String token) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

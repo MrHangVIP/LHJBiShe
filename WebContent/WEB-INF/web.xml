@@ -172,6 +172,36 @@
 		<url-pattern>/GetVehicleRecordDatas</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>BusinessIdCheck</servlet-name>
+		<servlet-class>com.lhj.servlets.BusinessIdCheck</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>BusinessIdCheck</servlet-name>
+		<url-pattern>/BusinessIdCheck</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FinishUserInfo</servlet-name>
+		<servlet-class>com.lhj.servlets.FinishUserInfo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FinishUserInfo</servlet-name>
+		<url-pattern>/FinishUserInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateBusinessLogo</servlet-name>
+		<servlet-class>com.lhj.servlets.UpdateBusinessLogo</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UpdateBusinessLogo</servlet-name>
+		<url-pattern>/UpdateBusinessLogo</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
 
 

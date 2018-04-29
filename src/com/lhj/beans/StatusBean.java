@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class StatusBean implements Serializable {
 	
 	private int id;
-	//0可用，1使用中，2维修中，3已经报废
+	//0可借，1使用中，2维修中，3已经报废
 	private int statusId;
 	
 	private int vehcileId;

@@ -2,7 +2,7 @@ package com.lhj.beans;
 
 import java.io.Serializable;
 
-public class VehicleRecordBean extends VehicleBean implements Serializable {
+public class VehicleRecordBean  implements Serializable {
 	
 	private int id;
 	
@@ -23,6 +23,16 @@ public class VehicleRecordBean extends VehicleBean implements Serializable {
 	private String message;
 	
 	private UserBean userBean;
+	
+	private VehicleBean vehicleBean;
+	public VehicleBean getVehicleBean() {
+		return vehicleBean;
+	}
+
+	public void setVehicleBean(VehicleBean vehicleBean) {
+		this.vehicleBean = vehicleBean;
+	}
+
 	//0申请中，1使用中，2已拒绝，3已完成
 	private String state;
 

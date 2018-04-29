@@ -8,9 +8,11 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.lhj.Daos.base.BaseDBFactor;
 import com.lhj.beans.UserBean;
+import com.lhj.beans.VehicleRecordBean;
 import com.lhj.utils.DateUtil;
 
 /**
@@ -58,7 +60,7 @@ public class UserDaoImp extends BaseDBFactor<UserBean> {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select * from t_user where userId = ?";
-			userList = (List<UserBean>) qr.query(conn, sql, new BeanHandler(UserBean.class), userid);
+			userList = (List<UserBean>) qr.query(conn, sql, new BeanListHandler<UserBean>(UserBean.class), userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -174,6 +176,39 @@ public class UserDaoImp extends BaseDBFactor<UserBean> {
 		}
 		return false;
 	}
+	
+	
+	public boolean finishUserInfo(String businessid,String userPhone, String trueName,
+			String sex,String birth,String licence,String level) {
+		Connection conn = null;
+		PreparedStatement stat = null;
+		int rowCount = 0;
+		try {
+			conn = getConn();
+			String sql = "update t_user set truename= ? , sex = ? , age = ? , "
+					+ " licence = ? , type = ? , lastupdatetime = ? where userphone = ? and businessid = ?";
+			stat = conn.prepareStatement(sql);
+			// 璁剧疆鍊�
+			stat.setString(1, trueName);
+			stat.setString(2, sex);
+			stat.setString(3, birth);
+			stat.setString(4, licence);
+			stat.setString(5, level);
+			stat.setLong(6, System.currentTimeMillis());
+			stat.setString(7, userPhone);
+			stat.setString(8, businessid);
+			// 鎵ц
+			rowCount = stat.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConn(stat, conn);
+		}
+		if (rowCount > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 淇敼瀵嗙爜
@@ -214,7 +249,7 @@ public class UserDaoImp extends BaseDBFactor<UserBean> {
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select * from t_user where userphone = ? , userpass = ? and businessid = ?";
+			String sql = "select * from t_user where userphone = ? and userpass = ? and businessid = ?";
 			userbean = (UserBean) qr.query(conn, sql, new BeanHandler<UserBean>(UserBean.class), userPhone, userPass, businssid);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,14 +280,14 @@ public class UserDaoImp extends BaseDBFactor<UserBean> {
 
 	}
 	
-	public UserBean getUserInfo(String businssid ,String userPhone) {
+	public UserBean getUserInfo(String userPhone ,String businessid) {
 		Connection conn = null;
 		UserBean userbean = null;
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select * from t_user where a.userphone = ? and businssid = ?";
-			userbean = (UserBean) qr.query(conn, sql, new BeanHandler<UserBean>(UserBean.class), userPhone,businssid);
+			String sql = "select * from t_user where userphone = ? and businessid = ?";
+			userbean = (UserBean) qr.query(conn, sql, new BeanHandler<UserBean>(UserBean.class), userPhone,businessid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -291,7 +326,7 @@ public class UserDaoImp extends BaseDBFactor<UserBean> {
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select * from t_user where a.userid = ? and businssid = ?";
+			String sql = "select * from t_user where userid = ? and businessid = ?";
 			userbean = (UserBean) qr.query(conn, sql, new BeanHandler<UserBean>(UserBean.class), userid,businessId);
 		} catch (Exception e) {
 			e.printStackTrace();

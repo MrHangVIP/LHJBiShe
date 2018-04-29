@@ -55,7 +55,7 @@ public class StatusDaoImp extends BaseDBFactor<StatusBean> {
 		int rowCount = 0;
 		try {
 			conn = getConn();
-			String sql = "update t_status set statusid = ? ,statustype = ? and updatetime = ?  where vehicleid = ? ";
+			String sql = "update t_status set statusid = ? and statustype = ? and updatetime = ?  where vehicleid = ? ";
 			stat = conn.prepareStatement(sql);
 			// 璁剧疆鍊�
 			stat.setInt(1, (int) obj[0]);

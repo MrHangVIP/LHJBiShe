@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.lhj.Daos.base.BaseDBFactor;
 import com.lhj.beans.UserBean;
+import com.lhj.beans.VehicleBean;
 import com.lhj.beans.VehicleRecordBean;
 import com.lhj.utils.DateUtil;
 
@@ -62,7 +64,7 @@ public class VehicleRecordDaoImp extends BaseDBFactor<VehicleRecordBean> {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select * from t_borrow_record where businessid = ? , userid= ? and state = ?";
-			vehicleBean = (VehicleRecordBean) qr.query(conn, sql, new BeanHandler(VehicleRecordBean.class), businessid,userid,state);
+			vehicleBean = (VehicleRecordBean) qr.query(conn, sql, new BeanListHandler<VehicleRecordBean>(VehicleRecordBean.class), businessid,userid,state);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -146,41 +148,50 @@ public class VehicleRecordDaoImp extends BaseDBFactor<VehicleRecordBean> {
 	 * 用戶根据状态获取
 	 * @return
 	 */
-	public List<VehicleRecordBean> getDatasWithState(String businessId,String userId,String state,String  vehicleId){
+	public List<VehicleRecordBean> getDatasWithState(String businessId,int userid,String state,String  vehicleId){
 		
 		Connection conn = null;
 		List<VehicleRecordBean> VehicleRecordBeans = null;
 		try {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
-			String sql = "select a.*,b.statusid,b.statustype from t_vehicle as a " + "inner join t_status "
-					+ "as b on a.vehicleid = b.vehicleid  inner join t_borrow_record as c on a.vehicleid = c.vehicleid group by createtimestmp desc";
+//			String sql = "select a.*,b.statusid,b.statustype from t_vehicle as a " + "inner join t_status "
+//					+ "as b on a.vehicleid = b.vehicleid  inner join t_borrow_record as c on a.vehicleid = c.vehicleid group by createtimestmp desc";
+			String sql = "select * from t_borrow_record ";
 			StringBuilder sb=new StringBuilder(sql);
-			sb.append(" where businessid = " + businessId);
-			if(!"".equals(userId) && userId !=null){
-				sb.append(" , userId = " + userId);
+			sb.append(" where businessid = \"" + businessId+"\"");
+			if(userid!=-1){
+				sb.append(" and userid = " + userid);
 			}
 			if(!"".equals(state) && state!=null){
-				sb.append(" , state = " + state);
+				sb.append(" and state = " + state);
 			}
 			if(!"".equals(vehicleId) && vehicleId!=null){
-				sb.append(" , vehicleId = " + vehicleId);
+				sb.append(" and vehicleId = " + vehicleId);
 			}
-			sb.append(" , vehicleId = " + vehicleId);
-			VehicleRecordBeans = (List<VehicleRecordBean>) qr.query(conn, sql, new BeanHandler(VehicleRecordBean.class));
+			sb.append(" group by createtimestmp desc");
+			VehicleRecordBeans = (List<VehicleRecordBean>) qr.query(conn, sb.toString(), new BeanListHandler<VehicleRecordBean>(VehicleRecordBean.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeConn(null, conn);
 		}
-		if(VehicleRecordBeans!=null){//获取用户信息
+		if(VehicleRecordBeans!=null && VehicleRecordBeans.size()>0){//获取用户信息
 			UserDaoImp daoImp=new UserDaoImp();
 			for(VehicleRecordBean bean:VehicleRecordBeans){
-				UserBean user=daoImp.getData(bean.getUserId());
+				UserBean user=daoImp.getData(bean.getUserId(),bean.getBusinessId());
 				bean.setUserBean(user);
 			}
 		}
+		if(VehicleRecordBeans!=null && VehicleRecordBeans.size()>0){//获取用户信息
+			VehicleDaoImp daoImp=new VehicleDaoImp();
+			for(VehicleRecordBean bean:VehicleRecordBeans){
+				VehicleBean vehicle=daoImp.getData(bean.getVehicleId());
+				bean.setVehicleBean(vehicle);
+			}
+		}
+
 		return VehicleRecordBeans;
 	}
-
+	
 }

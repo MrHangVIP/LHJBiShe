@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.lhj.Daos.base.BaseDBFactor;
 import com.lhj.beans.BusinessBean;
@@ -26,7 +27,7 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 			// 璁剧疆鍊�
 			stat.setString(1, t.getBusinessId());
 			stat.setString(2, t.getEmail());
-			stat.setString(3, t.getUserPass());
+			stat.setString(3, t.getPassWord());
 			stat.setString(4, t.getCompanyname());
 			stat.setString(5, DateUtil.getCurrentDate());
 			stat.setString(6,  DateUtil.getCurrentDate());
@@ -53,7 +54,7 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 			conn = getConn();
 			QueryRunner qr = new QueryRunner();
 			String sql = "select * from t_business where businessId = ?";
-			userList = (List<BusinessBean>) qr.query(conn, sql, new BeanHandler(BusinessBean.class), userid);
+			userList = (List<BusinessBean>) qr.query(conn, sql, new BeanListHandler(BusinessBean.class), userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -119,6 +120,32 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 		return false;
 	}
 	
+	public boolean updateLogo(String businessid,String email, String logo) {
+		Connection conn = null;
+		PreparedStatement stat = null;
+		int rowCount = 0;
+		try {
+			conn = getConn();
+			String sql = "update t_business set logo= ? , updatetime = ? where email = ? and businessid = ?";
+			stat = conn.prepareStatement(sql);
+			// 璁剧疆鍊�
+			stat.setString(1, logo);
+			stat.setLong(2, System.currentTimeMillis());
+			stat.setString(3, email);
+			stat.setString(4, businessid);
+			// 鎵ц
+			rowCount = stat.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConn(stat, conn);
+		}
+		if (rowCount > 0) {
+			return true;
+		}
+		return false;
+	}
+	
 	public BusinessBean login(String userPhone, String userPass) {
 		Connection conn = null;
 		BusinessBean businessBean = null;
@@ -134,6 +161,30 @@ public class BusinessDaoImp extends BaseDBFactor<BusinessBean> {
 		}
 		return businessBean;
 
+	}
+	
+	/**
+	 * 企业号检测
+	 * @param businessId
+	 * @return
+	 */
+	public boolean checkBusinessId(String businessId){
+		Connection conn = null;
+		BusinessBean businessBean = null;
+		try {
+			conn = getConn();
+			QueryRunner qr = new QueryRunner();
+			String sql = "select * from t_business where businessId = ?";
+			businessBean = (BusinessBean) qr.query(conn, sql, new BeanHandler(BusinessBean.class), businessId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConn(null, conn);
+		}
+		if (businessBean == null) {
+			return false;
+		}
+		return true;
 	}
 
 	public BusinessBean getBusinessInfo(String businessId) {

@@ -11,6 +11,7 @@ import com.lhj.Daos.TagDaoImp;
 import com.lhj.beans.TagBean;
 import com.lhj.servlets.base.BaseServletFactory;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class GetTags extends BaseServletFactory {
@@ -21,9 +22,15 @@ public class GetTags extends BaseServletFactory {
 		Map<String, String> map = new HashMap<String, String>();
 			TagDaoImp tagDaoImp = new TagDaoImp();
 			List<TagBean> tags = tagDaoImp.getDataList();
-			JSONObject itemJson = JSONObject.fromObject(tags);
+			JSONArray itemJson = JSONArray.fromObject(tags);
 			map.put("result", "success");
 			map.put("data", itemJson.toString());
 		return map;
+	}
+	
+	@Override
+	protected boolean tokenChecked(String userPhone, String token) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
