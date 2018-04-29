@@ -24,9 +24,14 @@ public class GetBusinessInfo extends BaseServletFactory {
 		Map<String, String> map = new HashMap<String, String>();
 			BusinessDaoImp biBusinessDaoImp = new BusinessDaoImp();
 			BusinessBean businessBean = biBusinessDaoImp.login(email,passWord);
-			JSONObject itemJson = JSONObject.fromObject(businessBean);
-			map.put("result", "success");
-			map.put("data", itemJson.toString());
+			if (businessBean == null) {
+				map.put("result", "fail");
+				map.put("data", "");
+			} else {
+				JSONObject itemJson = JSONObject.fromObject(businessBean);
+				map.put("result", "success");
+				map.put("data", itemJson.toString());
+			}
 		return map;
 	}
 	
