@@ -42,27 +42,27 @@ public class AddBusiness extends BaseServletFactory {
 		businessBean.setCompanyname(companyname);
 		String respose="";
 		if(!Constant.isEmail(email)){
-			respose="娉ㄥ唽澶辫触锛侀偖绠卞湴鍧�涓嶅悎娉曪紒";
+			respose="请输入正确的邮箱地址";
 		}else{
 			BusinessDaoImp businessDaoImp = new BusinessDaoImp();
 			boolean isExist = businessDaoImp.emailCheck(email);
 			if (isExist) {
-				respose="娉ㄥ唽澶辫触锛侀偖绠卞凡瀛樺湪锛�";
+				respose="邮箱已注册！请登录";
 			} else {
 				String businessId=Constant.getRandomCharAndNumr(11);
 				businessBean.setBusinessId(businessId);
 				boolean result = businessDaoImp.insertData(businessBean);
 				if (result) {
-					respose="娉ㄥ唽鎴愬姛锛佹偍鐨勪紒涓氬彿ID鏄細"+businessId+" 銆傝璁颁綇锛�";
+					respose="注册成功！您的企业Id为："+businessId;
 				} else {
-					respose="娉ㄥ唽澶辫触锛�";
+					respose="注册失败";
 				}
 			}
 		}
 		PrintWriter out = response.getWriter();
 		out.println("<html>");  
 	    out.println("<head>");  
-	    out.println("<title>"+"娉ㄥ唽"+"</title>"); 
+	    out.println("<title>"+"企业注册"+"</title>"); 
 	    out.print("<meta http-equiv=content-type content=text/html; charset=UTF-8>");
 	    out.println("</head>");  
 	    out.println("<body>");  
